@@ -1,6 +1,10 @@
-import axios from "axios";
+// import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MAIN_INIT_DATA_API } from "../constants/api_constants";
+import fetcher from "../fetcher";
+import { Link } from "react-router-dom";
+import { ADMIN_MAIN, USER_MAIN } from "../constants/page_constants";
+import Header from "../constants/Header";
 
 export default function MainPage() {
   const [initData, setInitData] = useState("서버 통신 에러");
@@ -8,18 +12,29 @@ export default function MainPage() {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   const fetchInitData = async () => { //비동기통신
-    try{
-    //1. 서버로 부터 localhost:8080/main 으로 get 요청을 해서 데이터 받아옴 --> 가장 먼저 수행 (await)
+    // try{
+    // //1. 서버로 부터 localhost:8080/main 으로 get 요청을 해서 데이터 받아옴 --> 가장 먼저 수행 (await)
     
-    const response = await axios.get(
-      API_BASE_URL + MAIN_INIT_DATA_API
-    ); //response에 "Hello World" 담기
+    // const response = await axios.get(
+    //   API_BASE_URL + MAIN_INIT_DATA_API
+    // ); //response에 "Hello World" 담기
 
-    //2. 받아온 데이터 setInitData를 사용해서 initData(State)값 변경
-    setInitData(response.data);
+    // //2. 받아온 데이터 setInitData를 사용해서 initData(State)값 변경
+    // setInitData(response.data);
+    // }catch(error){
+    //   console.error("데이터 가져오기 오류",error);
+    // }
+
+    //fetcher 적용
+    try{
+      const response = await fetcher.get(MAIN_INIT_DATA_API);
+      setInitData(response.data);
     }catch(error){
       console.error("데이터 가져오기 오류",error);
     }
+
+
+
   }
 
   useEffect(()=>{
@@ -30,8 +45,11 @@ export default function MainPage() {
 //배열 받기 Map~
   return(
     <>
+      <Header/>
       <h1>Main Page</h1>
       <h3>{initData}</h3>
+      <div><Link to={USER_MAIN}>유저페이지</Link></div>
+      <div><Link to={ADMIN_MAIN}>관리자페이지</Link></div>
     </>
   );
 }

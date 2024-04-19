@@ -4,6 +4,8 @@ import axios from "axios";
 import { SIGN_UP_API } from "../constants/api_constants";
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from "../constants/page_constants";
+import fetcher from "../fetcher";
+import Header from "../constants/Header";
 
 export default function SignupPage(){
   const [id, setId] = useState("");
@@ -22,11 +24,14 @@ export default function SignupPage(){
       formData.append("name",name);
       formData.append("password",password);
 
-      const response = await axios.post(
-        API_BASE_URL + SIGN_UP_API,
-        //body
-        formData
-      )
+      // const response = await axios.post(
+      //   API_BASE_URL + SIGN_UP_API,
+      //   //body
+      //   formData
+      // )
+
+      const response = await fetcher.post(SIGN_UP_API, formData)
+
       alert(response.data);
       //로그인페이지로 보내주기
       navigate(LOGIN);
@@ -37,6 +42,7 @@ export default function SignupPage(){
 
   return(
     <>
+    <Header/>
     <form onSubmit={handleSignup}>
       <TextFiled
         label = "아이디"

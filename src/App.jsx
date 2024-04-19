@@ -1,10 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
-import { MAIN, ADMIN_MAIN, USER_MAIN, SIGN_UP, LOGIN } from './constants/page_constants';
+import { MAIN, ADMIN_MAIN, USER_MAIN, SIGN_UP, LOGIN, PAGE_403, PAGE_404,  } from './constants/page_constants';
 import MainPage from './pages/MainPage';
 import UserPage from './pages/UserPage';
 import AdminPage from './pages/AdminPage';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
+import Page403 from './errorPages/Page403';
+import Page404 from './errorPages/Page404';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path={ADMIN_MAIN} element={<AdminPage/>} />
         <Route path={SIGN_UP} element={<SignupPage/>} />
         <Route path={LOGIN} element={<LoginPage/>} />
+        <Route path={PAGE_403} element={<Page403/>} />
+        <Route path={PAGE_404} element={<Page404/>}/>
       </Routes>
     </>
   );
